@@ -165,7 +165,7 @@ class _PatientDashboardState extends State<PatientDashboard> {
       child: Column(children: <Widget>[
         SizedBox(height: height * 0.02),
         Padding(
-          padding: EdgeInsets.only(bottom: height * 0.02, top: height * 0.0275),
+          padding: EdgeInsets.only(bottom: height * 0.02, top: height * 0.0275, left: width * 0.04, right: width * 0.04 ),
           child: Align(alignment: Alignment.center, child: Entry()
               ),
         ),
