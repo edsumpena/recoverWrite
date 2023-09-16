@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
@@ -89,12 +90,12 @@ class AddEntryBloc extends FormBloc<String, String> {
     log["journal"] = [journal.value];
 
     final dataDir = await getApplicationDocumentsDirectory();
-    final dir = Directory('${dataDir.path}/Events');
+    final dir = Directory('${dataDir.path}/Entries');
 
     await dir.create(recursive: true).then((value) async {
       if (dir.existsSync()) {
-        final file = File('${dataDir.path}/Events/${DateTime.now().millisecondsSinceEpoch}.json');
-        await file.writeAsString(log.toString());
+        final file = File('${dataDir.path}/Entries/${DateTime.now().millisecondsSinceEpoch}.json');
+        await file.writeAsString(json.encode(log));
       }
     });
 

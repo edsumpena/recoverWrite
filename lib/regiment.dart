@@ -1,23 +1,17 @@
-import 'dart:collection';
-
 import 'package:flutter/material.dart';
 
 import 'FoldableWidget.dart';
 
-class Entry extends StatefulWidget {
-  final HashMap<String, List<String>> entry;
-  final double sentiment;
-  const Entry({
+class Regiment extends StatefulWidget {
+  const Regiment({
     Key? key,
-    required this.entry,
-    required this.sentiment
   }) : super(key: key);
 
   @override
-  State<Entry> createState() => _EntryState();
+  State<Regiment> createState() => _RegimentState();
 }
 
-class _EntryState extends State<Entry> with SingleTickerProviderStateMixin {
+class _RegimentState extends State<Regiment> with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   final Duration duration = const Duration(milliseconds: 1000);
 
@@ -124,7 +118,7 @@ class _EntryState extends State<Entry> with SingleTickerProviderStateMixin {
                                             CrossAxisAlignment.start,
                                         children: [
                                           const Text(
-                                            "General Information:",
+                                            "Step 1:",
                                             style: TextStyle(
                                                 fontSize: 18,
                                                 fontWeight: FontWeight.bold,
@@ -133,27 +127,9 @@ class _EntryState extends State<Entry> with SingleTickerProviderStateMixin {
                                             maxLines: 1,
                                           ),
                                           SizedBox(height: height * 0.0075),
-                                          Text(
-                                            "Completed Regiment: ${widget.entry["completeRegiment"]![0]}",
-                                            style: const TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.bold,
-                                                overflow: TextOverflow.ellipsis,
-                                                color: Colors.grey),
-                                          ),
-                                          SizedBox(height: height * 0.0075),
-                                          Text(
-                                            "Time Spent: ${widget.entry["timeSpent"]![0]}",
-                                            style: const TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.bold,
-                                                overflow: TextOverflow.ellipsis,
-                                                color: Colors.grey),
-                                          ),
-                                          SizedBox(height: height * 0.0075),
-                                          Text(
-                                            "Feelings: ${widget.entry["emotion"]![0]}",
-                                            style: const TextStyle(
+                                          const Text(
+                                            "Take a nap, go to sleep.",
+                                            style: TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.bold,
                                                 overflow: TextOverflow.ellipsis,
@@ -260,7 +236,7 @@ class _EntryState extends State<Entry> with SingleTickerProviderStateMixin {
                       ]))),
           next: Column(
             children: [
-              _section1(foldedHeight1, context, "Completed Exercises:", widget.entry["completeDescription"]![0]),
+              _section1(foldedHeight1, context, "Step 2:", "Go out, drink a beer."),
               AnimatedFoldingWidget(
                 animation: Tween(begin: 0.0, end: 1.0).animate(
                   CurvedAnimation(
@@ -272,12 +248,12 @@ class _EntryState extends State<Entry> with SingleTickerProviderStateMixin {
                     ),
                   ),
                 ),
-                behind: _section1(foldedHeight2, context, "Uncompleted Exercises:", widget.entry["noCompleteDescription"]![0]),
+                behind: _section1(foldedHeight2, context, "Step 3:", "Pass out on your bed, sleep 'til noon."),
                 front: Container(
                   height: foldedHeight2,
                   color: Colors.white,
                 ),
-                next: _section1(foldedHeight3, context, "Feelings, Thoughts, and Challenges:", widget.entry["journal"]![0]),
+                next: _section1(foldedHeight3, context, "Step 4:", "Realize that hangovers suck."),
               ),
             ],
           ),

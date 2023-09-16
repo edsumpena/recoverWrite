@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recovery_app/PatientDashboard.dart';
+import 'package:recovery_app/ProviderDashboard.dart';
 
 import 'bouncing.dart';
 import 'fade_animations.dart';
@@ -72,7 +73,11 @@ class _SelectTypeState extends State<SelectType> {
                             color: Colors.indigoAccent,
                             child: InkWell(
                               splashColor: Colors.indigo,
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(builder: (context) => ProviderDashboard()),
+                                );
+                              },
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
