@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:recovery_app/entry.dart';
 
 import 'bouncing.dart';
 import 'fade_animations.dart';
@@ -10,13 +12,23 @@ import 'fade_animations.dart';
 import 'package:dart_sentiment/dart_sentiment.dart';
 import 'package:collection/collection.dart';
 
-
 class ProviderDashboard extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _ProviderDashboardState();
 }
 
 class _ProviderDashboardState extends State<ProviderDashboard> {
+  List<Map<String, dynamic>> entries = [];
+  List<double> sentiment = [];
+
+  int flagged_entry = -1;
+  int sentiment_risk = 0;
+
+  // Output is [-5, 5]
+  // Threshold is based on | Score |
+  double SENTIMENT_THRESHOLD_MEDIUM = 0.05;
+  double SENTIMENT_THRESHOLD_HIGH = 0.1;
+
   @override
   void initState() {
     super.initState();
@@ -28,9 +40,6 @@ class _ProviderDashboardState extends State<ProviderDashboard> {
   Future<void> _readEntries() async {
     final dataDir = await getApplicationDocumentsDirectory();
     final sent_analyzer = Sentiment();
-
-    List<Map<String, dynamic>> entries = [];
-    List<double> sentiment = [];
 
     while (true) {
       final dir = Directory('${dataDir.path}/Entries');
@@ -51,41 +60,69 @@ class _ProviderDashboardState extends State<ProviderDashboard> {
               double sent = 0.0;
 
               if (entry['journal']![0].isNotEmpty) {
-                sent = sent_analyzer.analysis(entry['journal']![0])['comparative'];
+                sent =
+                sent_analyzer.analysis(entry['journal']![0])['comparative'];
               }
 
               entries_tmp.add(entry);
               sentiment_tmp.add(sent);
 
-              print(entry['journal']![0]);
-              print(sent);
+              if (kDebugMode) {
+                print(entry['journal']![0]);
+                print(sent);
+              }
             }
           }
 
-          if (ListEquality().equals(entries_tmp, entries)) {
+          if (!const ListEquality().equals(entries_tmp, entries)) {
+            int flagged_entry_tmp = -1;
+            int sentiment_risk_tmp = 0;
+
+            for (int i = 0; i < sentiment_tmp.length; i++) {
+              if (sentiment_tmp[i].abs() > SENTIMENT_THRESHOLD_MEDIUM) {
+                flagged_entry_tmp = i;
+
+                if (sentiment_tmp[i].abs() > SENTIMENT_THRESHOLD_HIGH) {
+                  sentiment_risk_tmp = 2;
+                } else {
+                  sentiment_risk_tmp = 1;
+                }
+              }
+            }
+
             setState(() {
+              flagged_entry = flagged_entry_tmp;
               entries = entries_tmp;
               sentiment = sentiment_tmp;
+              sentiment_risk = sentiment_risk_tmp;
             });
           }
         }
       });
+
+      await Future.delayed(const Duration(milliseconds: 3000));
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery
+        .of(context)
+        .size
+        .width;
+    double height = MediaQuery
+        .of(context)
+        .size
+        .height;
 
     return GestureDetector(
-      onTap: () {
-        FocusScopeNode currentFocus = FocusScope.of(context);
-        if (!currentFocus.hasPrimaryFocus) {
-          currentFocus.unfocus();
-        }
-      },
-      child: Scaffold(
+        onTap: () {
+          FocusScopeNode currentFocus = FocusScope.of(context);
+          if (!currentFocus.hasPrimaryFocus) {
+            currentFocus.unfocus();
+          }
+        },
+        child: Scaffold(
           appBar: AppBar(
               elevation: 0.0,
               backgroundColor: Colors.indigo,
@@ -100,109 +137,175 @@ class _ProviderDashboardState extends State<ProviderDashboard> {
               scrollDirection: Axis.vertical,
               child: Column(
                 children: <Widget>[
-                  Container(
-                    width: double.infinity,
-                    height: height * 0.325,
-                    decoration: const BoxDecoration(
-                      color: Colors.indigo,
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(20),
-                        bottomRight: Radius.circular(20),
-                      ),
-                    ),
-                    //padding: const EdgeInsets.only(top: 5.0),
-                    child: FadeAnimation(
-                      2.0,
-                      Stack(
-                        children: [
-                          Center(
-                            child: Column(children: <Widget>[
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    left: 16, right: 16, top: height * 0.02),
-                                child: Text("Hi Dr. House M.D.!",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: width * 0.10,
-                                    )),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    left: width * 0.075,
-                                    right: width * 0.075,
-                                    top: height * 0.035),
-                                child: Bouncing(
-                                    enlarge: true,
-                                    onPress: () {},
-                                    child: Container(
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(27.0),
-                                            color: Colors.white,
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: Colors.black
-                                                    .withOpacity(0.15),
-                                                offset: const Offset(2, 0),
-                                                spreadRadius: 1,
-                                                blurRadius: 25,
-                                              ),
-                                            ]),
-                                        child: Container(
-                                            margin: EdgeInsets.only(
-                                                top: height * 0.025,
-                                                left: width * 0.05,
-                                                right: width * 0.05,
-                                                bottom: height * 0.025),
-                                            child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: <Widget>[
-                                                  RichText(
-                                                      maxLines: 2,
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      text: TextSpan(children: [
-                                                        TextSpan(
-                                                            text:
-                                                                "Days on Regiment:\n",
-                                                            style: TextStyle(
-                                                              fontSize:
-                                                                  width * 0.06,
-                                                              color:
-                                                                  Colors.black,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                            )),
-                                                        TextSpan(
-                                                            text: "5",
-                                                            style: TextStyle(
-                                                                fontSize:
-                                                                    width *
-                                                                        0.15,
-                                                                color: Colors
-                                                                    .black))
-                                                      ])),
-                                                ])))),
-                              ),
-                            ]),
-                          ),
-                        ],
-                      ),
-                    ),
+              Container(
+              width: double.infinity,
+                height: height * 0.325,
+                decoration: const BoxDecoration(
+                  color: Colors.indigo,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(20),
+                    bottomRight: Radius.circular(20),
                   ),
-                  /*FadeAnimation(
+                ),
+                //padding: const EdgeInsets.only(top: 5.0),
+                child: FadeAnimation(
+                  2.0,
+                  Stack(
+                    children: [
+                      Center(
+                        child: Column(children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.only(
+                                left: 16, right: 16, top: height * 0.02),
+                            child: Text("Hi Dr. House M.D.!",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: width * 0.10,
+                                )),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                                left: width * 0.075,
+                                right: width * 0.075,
+                                top: height * 0.035),
+                            child: Bouncing(
+                                enlarge: true,
+                                onPress: () {},
+                                child: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                        BorderRadius.circular(27.0),
+                                        color: Colors.white,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.black
+                                                .withOpacity(0.15),
+                                            offset: const Offset(2, 0),
+                                            spreadRadius: 1,
+                                            blurRadius: 25,
+                                          ),
+                                        ]),
+                                    child: Container(
+                                        margin: EdgeInsets.only(
+                                            top: height * 0.025,
+                                            left: width * 0.05,
+                                            right: width * 0.05,
+                                            bottom: height * 0.025),
+                                        child: Column(
+                                            crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                            MainAxisAlignment
+                                                .spaceBetween,
+                                            children: <Widget>[
+                                              RichText(
+                                                  maxLines: 2,
+                                                  textAlign:
+                                                  TextAlign.center,
+                                                  text: TextSpan(children: [
+                                                    TextSpan(
+                                                        text:
+                                                        "Days on Regiment:\n",
+                                                        style: TextStyle(
+                                                          fontSize:
+                                                          width * 0.06,
+                                                          color:
+                                                          Colors.black,
+                                                          fontWeight:
+                                                          FontWeight
+                                                              .w600,
+                                                        )),
+                                                    TextSpan(
+                                                        text: "5",
+                                                        style: TextStyle(
+                                                            fontSize:
+                                                            width *
+                                                                0.15,
+                                                            color: Colors
+                                                                .black))
+                                                  ])),
+                                            ])))),
+                          ),
+                        ]),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: height * 0.04),
+              Padding(
+                padding: EdgeInsets.only(
+                    bottom: height * 0.02,
+                    top: height * 0.0275,
+                    left: width * 0.04,
+                    right: width * 0.04),
+                child: FadeAnimation(
                     2.0,
-                    null,
-                  ),*/
-                ],
-              ))),
+                    Align(
+                        alignment: Alignment.center,
+                        child: Entry(
+                            entry: flagged_entry < 0
+                                ? null
+                                : entries[flagged_entry],
+                            sentiment_risk: flagged_entry < 0
+                                ? null
+                                : sentiment_risk))),
+              ),
+              SizedBox(height: height * 0.04),
+              FadeAnimation(
+                  2.0,
+                  Bouncing(
+                      onPress: () {},
+                      child: _listOfPatients(context))),
+          SizedBox(height: height * 0.04),
+          ],
+        ))),
+    );
+  }
+
+  Widget _listOfPatients(BuildContext context) {
+    double width = MediaQuery
+        .of(context)
+        .size
+        .width;
+    double height = MediaQuery
+        .of(context)
+        .size
+        .height;
+
+    return ListView.builder(
+      itemBuilder: (BuildContext context, index) {
+        return Card(
+          child: InkWell(
+            onTap: () {
+
+            },
+            child: ListTile(
+              leading: const Icon(
+                Icons.person,
+                size: 36,
+              ),
+              contentPadding: EdgeInsets.only(
+                  top: height * 0.007,
+                  bottom: height * 0.0035,
+                  left: width * 0.03,
+                  right: width * 0.03),
+              title:
+              Text("John Doe", style: TextStyle(fontSize: width * 0.015 + 8)),
+              subtitle: Text("No. of Entries: ${entries.length}",
+                  style: TextStyle(
+                      color: Colors.black54, fontSize: width * 0.015 + 6)),
+            ),
+          ),
+        );
+      },
+      itemCount: 1,
+      shrinkWrap: true,
+      padding: EdgeInsets.all(height * 0.015),
+      scrollDirection: Axis.vertical,
+      physics: const ScrollPhysics(),
     );
   }
 }
