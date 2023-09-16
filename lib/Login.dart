@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:recovery_app/SelectType.dart';
 
 import 'bouncing.dart';
@@ -13,6 +16,31 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    void delete() async {
+      final dataDir = await getApplicationDocumentsDirectory();
+
+      final dir = Directory('${dataDir.path}/Entries');
+
+      await dir.create(recursive: true).then((value) async {
+        if (dir.existsSync()) {
+          List<FileSystemEntity> entities = await dir.list().toList();
+          Iterable<File> files = entities.whereType<File>();
+
+          for (File f in files) {
+            f.delete();
+            print('deleted!!!');
+          }
+        }
+      });
+    }
+
+    // delete();
+  }
 
   @override
   Widget build(BuildContext context) {

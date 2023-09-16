@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:recovery_app/entry.dart';
+import 'package:recovery_app/regiment.dart';
 import 'package:recovery_app/journal_form.dart';
 
 import 'bouncing.dart';
@@ -184,7 +184,7 @@ class _PatientDashboardState extends State<PatientDashboard> {
         SizedBox(height: height * 0.02),
         Padding(
           padding: EdgeInsets.only(bottom: height * 0.02, top: height * 0.0275, left: width * 0.04, right: width * 0.04 ),
-          child: Align(alignment: Alignment.center, child: Entry()
+          child: Align(alignment: Alignment.center, child: Regiment()
               ),
         ),
         SizedBox(height: height * 0.02),

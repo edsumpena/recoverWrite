@@ -1,23 +1,17 @@
-import 'dart:collection';
-
 import 'package:flutter/material.dart';
 
 import 'FoldableWidget.dart';
 
-class Entry extends StatefulWidget {
-  final Map<String, dynamic>? entry;
-  final int? sentiment_risk;
-  const Entry({
+class Regiment extends StatefulWidget {
+  const Regiment({
     Key? key,
-    required this.entry,
-    required this.sentiment_risk
   }) : super(key: key);
 
   @override
-  State<Entry> createState() => _EntryState();
+  State<Regiment> createState() => _RegimentState();
 }
 
-class _EntryState extends State<Entry> with SingleTickerProviderStateMixin {
+class _RegimentState extends State<Regiment> with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   final Duration duration = const Duration(milliseconds: 1000);
 
@@ -49,7 +43,7 @@ class _EntryState extends State<Entry> with SingleTickerProviderStateMixin {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
-    double bigHeight = height * 0.225;
+    double bigHeight = height * 0.21;
     double foldedHeight1 = height * 0.125;
     double foldedHeight2 = height * 0.14;
     double foldedHeight3 = height * 0.1725;
@@ -100,7 +94,7 @@ class _EntryState extends State<Entry> with SingleTickerProviderStateMixin {
                                           ),
                                           child: const Center(
                                             child: Text(
-                                              "John's Entry",
+                                              "Weeks 1 - 10 Regiment",
                                               style: TextStyle(
                                                   fontSize: 22,
                                                   fontWeight: FontWeight.bold,
@@ -124,7 +118,7 @@ class _EntryState extends State<Entry> with SingleTickerProviderStateMixin {
                                             CrossAxisAlignment.start,
                                         children: [
                                           const Text(
-                                            "General Information:",
+                                            "Step 1:",
                                             style: TextStyle(
                                                 fontSize: 18,
                                                 fontWeight: FontWeight.bold,
@@ -133,31 +127,14 @@ class _EntryState extends State<Entry> with SingleTickerProviderStateMixin {
                                             maxLines: 1,
                                           ),
                                           SizedBox(height: height * 0.0075),
-                                          Text(
-                                            "Completed Regiment: ${widget.entry == null ? "" : widget.entry!["completeRegiment"]![0]}",
-                                            style: const TextStyle(
+                                          const Text(
+                                            "Take a nap, go to sleep.",
+                                            style: TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.bold,
                                                 overflow: TextOverflow.ellipsis,
                                                 color: Colors.grey),
-                                          ),
-                                          SizedBox(height: height * 0.0075),
-                                          Text(
-                                            "Time Spent: ${widget.entry == null ? "" : widget.entry!["timeSpent"]![0]}",
-                                            style: const TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.bold,
-                                                overflow: TextOverflow.ellipsis,
-                                                color: Colors.grey),
-                                          ),
-                                          SizedBox(height: height * 0.0075),
-                                          Text(
-                                            "Emotional State: ${widget.entry == null ? "" : _getEmotion()}",
-                                            style: const TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.bold,
-                                                overflow: TextOverflow.ellipsis,
-                                                color: Colors.grey),
+                                            maxLines: 5,
                                           ),
                                           SizedBox(height: height * 0.004),
                                         ])))),
@@ -197,7 +174,7 @@ class _EntryState extends State<Entry> with SingleTickerProviderStateMixin {
                                               maxHeight: height * 0.035,
                                             ),
                                             child: const Text(
-                                              "John's Entry",
+                                              "Weeks 1 - 10 Regiment",
                                               style: TextStyle(
                                                 fontSize: 22,
                                                 color: Colors.white,
@@ -228,42 +205,39 @@ class _EntryState extends State<Entry> with SingleTickerProviderStateMixin {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          RichText(
-                                            text: TextSpan(
-                                              children: [
-                                                const TextSpan(
-                                                  text: "Sentiment Analysis Risk:  ",
-                                                  style: TextStyle(
-                                                      fontSize: 18,
-                                                      color: Colors.black,
-                                                    fontWeight: FontWeight.bold
-                                                  ),
-                                                ),
-                                                _sentimentRiskIcon()
-                                              ],
+                                          ConstrainedBox(
+                                            constraints: BoxConstraints(
+                                              minWidth: width * 0.625,
+                                              maxWidth: width * 0.625,
+                                              minHeight: height * 0.030,
+                                              maxHeight: height * 0.030,
                                             ),
+                                            child: const Text("Summary:",
+                                                style: TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 1),
                                           ),
                                           SizedBox(height: height * 0.0075),
-                                          Text("Completed Regiment: ${widget.entry == null ? "" : widget.entry!["completeRegiment"]![0]}",
-                                                style: const TextStyle(
+                                          ConstrainedBox(
+                                            constraints: BoxConstraints(
+                                              minWidth: width * 0.625,
+                                              maxWidth: width * 0.625,
+                                              minHeight: height * 0.030,
+                                              maxHeight: height * 0.030,
+                                            ),
+                                            child: const Text("Do some cool stuff",
+                                                style: TextStyle(
                                                     fontSize: 14),
-                                              maxLines: 1,
                                                 overflow: TextOverflow.ellipsis,),
-                                          Text("Time Spent: ${widget.entry == null ? "" : widget.entry!["timeSpent"]![0]}",
-                                            style: const TextStyle(
-                                                fontSize: 14),
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,),
-                                          Text("Emotional State: ${widget.entry == null ? "" : _getEmotion()}",
-                                            style: const TextStyle(
-                                                fontSize: 14),
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,),
+                                          ),
                                         ])))),
                       ]))),
           next: Column(
             children: [
-              _section1(foldedHeight1, context, "Completed Exercises:", widget.entry == null ? "" : widget.entry!["completeDescription"]![0]),
+              _section1(foldedHeight1, context, "Step 2:", "Go out, drink a beer."),
               AnimatedFoldingWidget(
                 animation: Tween(begin: 0.0, end: 1.0).animate(
                   CurvedAnimation(
@@ -275,50 +249,16 @@ class _EntryState extends State<Entry> with SingleTickerProviderStateMixin {
                     ),
                   ),
                 ),
-                behind: _section1(foldedHeight2, context, "Uncompleted Exercises:", widget.entry == null ? "" : widget.entry!["noCompleteDescription"]![0]),
+                behind: _section1(foldedHeight2, context, "Step 3:", "Pass out on your bed, sleep 'til noon."),
                 front: Container(
                   height: foldedHeight2,
                   color: Colors.white,
                 ),
-                next: _section1(foldedHeight3, context, "Feelings, Thoughts, and Challenges:", widget.entry == null ? "" : widget.entry!["journal"]![0]),
+                next: _section1(foldedHeight3, context, "Step 4:", "Realize that hangovers suck."),
               ),
             ],
           ),
         ));
-  }
-
-  String _getEmotion() {
-    String str = widget.entry!["emotion"]!.toString().replaceAll("[", "");
-    str = str.replaceAll("]", "");
-    return str;
-  }
-
-  WidgetSpan _sentimentRiskIcon() {
-    if (widget.sentiment_risk == 0) {
-      return const WidgetSpan(
-          child: IconTheme(
-        data: IconThemeData(
-            color: Colors.green),
-        child: Icon(
-          Icons.check_box, size: 22,),
-      ));
-    } else if (widget.sentiment_risk == 1) {
-      return const WidgetSpan(
-          child: IconTheme(
-        data: IconThemeData(
-            color: Colors.amber),
-        child: Icon(
-          Icons.access_time_filled, size: 22,),
-      ));
-    } else {
-      return const WidgetSpan(
-          child: IconTheme(
-        data: IconThemeData(
-            color: Colors.red),
-        child: Icon(
-          Icons.warning, size: 22,),
-      ));
-    }
   }
 
   Widget _section1(
@@ -346,8 +286,8 @@ class _EntryState extends State<Entry> with SingleTickerProviderStateMixin {
                                   children: [
                                     ConstrainedBox(
                                       constraints: BoxConstraints(
-                                        minWidth: width * 0.75,
-                                        maxWidth: width * 0.75,
+                                        minWidth: width * 0.55,
+                                        maxWidth: width * 0.55,
                                         minHeight: height * 0.0305,
                                         maxHeight: height * 0.0305,
                                       ),
@@ -362,8 +302,14 @@ class _EntryState extends State<Entry> with SingleTickerProviderStateMixin {
                                       ),
                                     ),
                                     SizedBox(height: height * 0.0075),
-                          Flexible(
-                              child: Text(
+                                    ConstrainedBox(
+                                      constraints: BoxConstraints(
+                                        minWidth: width * 0.70,
+                                        maxWidth: width * 0.70,
+                                        minHeight: height * 0.05,
+                                        maxHeight: height * 0.05,
+                                      ),
+                                      child: Text(
                                         content,
                                         style: const TextStyle(
                                             fontSize: 14,
