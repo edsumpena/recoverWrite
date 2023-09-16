@@ -14,7 +14,7 @@ class SentimentAnalysis {
   }
 
   Future<double> fetchSentiment(String input) async {
-    final url = Uri.parse('http://127.0.0.1:5000/sentiment'); // Replace with your API endpoint
+    final url = Uri.parse('https://recoverwrite.azurewebsites.net/sentiment'); // Replace with your API endpoint
     final headers = {'Content-Type': 'application/json'};
 
     // Create a Map representing the JSON data you want to send
