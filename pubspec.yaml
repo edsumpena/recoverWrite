@@ -39,6 +39,7 @@ dependencies:
   simple_animations: ^4.2.0
   flutter_speed_dial: ^7.0.0
   path_provider: ^2.1.1
+  fl_chart: ^0.62.0 # for analysis chart
 
 
   # The following adds the Cupertino Icons font to your application.

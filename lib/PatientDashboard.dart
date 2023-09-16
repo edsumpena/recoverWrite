@@ -7,6 +7,7 @@ import 'package:recovery_app/journal_form.dart';
 
 import 'bouncing.dart';
 import 'fade_animations.dart';
+import 'package:fl_chart/fl_chart.dart'; // for the analysis chart
 
 class PatientDashboard extends StatefulWidget {
   @override
@@ -29,7 +30,8 @@ class _PatientDashboardState extends State<PatientDashboard> {
       child: Scaffold(
           appBar: AppBar(
               elevation: 0.0,
-              backgroundColor: Colors.indigo,
+              backgroundColor: const Color(0xff4e1dc2),
+              //backgroundColor: Colors.indigo,
               leading: IconButton(
                 icon: Platform.isAndroid
                     ? const Icon(Icons.arrow_back, color: Colors.white)
@@ -41,7 +43,7 @@ class _PatientDashboardState extends State<PatientDashboard> {
           floatingActionButton: SpeedDial(
             animatedIcon: AnimatedIcons.menu_close,
             animatedIconTheme: const IconThemeData(size: 26),
-            backgroundColor: Colors.indigo,
+            backgroundColor: const Color(0xff4e1dc2),
             visible: true,
             curve: Curves.bounceIn,
             elevation: 15,
@@ -50,19 +52,19 @@ class _PatientDashboardState extends State<PatientDashboard> {
               SpeedDialChild(
                   child: const Icon(Icons.list_alt,
                       color: Colors.white),
-                  backgroundColor: Colors.indigoAccent,
+                  backgroundColor: const Color (0xff876EC2),
                   onTap: () {
                   },
-                  label: 'Entry List',
+                  label: 'View Entry List',
                   labelStyle: TextStyle(
                       fontWeight: FontWeight.w500,
                       color: Colors.white,
                       fontSize: width * 0.0125 + 11),
-                  labelBackgroundColor: Colors.indigoAccent),
+                  labelBackgroundColor: const Color (0xff876EC2)),
               SpeedDialChild(
                   child: const Icon(Icons.add,
                       color: Colors.white),
-                  backgroundColor: Colors.indigoAccent,
+                  backgroundColor: const Color (0xffaa9fc2),
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(builder: (context) => AddEntry()),
@@ -73,8 +75,8 @@ class _PatientDashboardState extends State<PatientDashboard> {
                       fontWeight: FontWeight.w500,
                       color: Colors.white,
                       fontSize: width * 0.0125 + 11),
-                  labelBackgroundColor: Colors.indigoAccent),
-            ],
+                  labelBackgroundColor: const Color (0xffaa9fc2)),
+              ],
           ),
           body: SingleChildScrollView(
               scrollDirection: Axis.vertical,
@@ -84,7 +86,7 @@ class _PatientDashboardState extends State<PatientDashboard> {
                     width: double.infinity,
                     height: height * 0.325,
                     decoration: const BoxDecoration(
-                      color: Colors.indigo,
+                      color: const Color(0xff4e1dc2),
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(20),
                         bottomRight: Radius.circular(20),
@@ -232,9 +234,73 @@ class _PatientDashboardState extends State<PatientDashboard> {
                               ])),
                         ])))),
         SizedBox(height: height * 0.04),
+        _buildPatientAnalysis(context),
+        SizedBox(height: height * 0.04),
       ]),
     );
   }
+}
+
+Widget _buildPatientAnalysis(BuildContext context) {
+  double width = MediaQuery.of(context).size.width;
+  double height = MediaQuery.of(context).size.height;
+
+  return SizedBox(
+    width: 300,
+    height: 300,
+    //return our analysis line chart
+    child: LineChart(
+      LineChartData(
+        // read about it in the LineChartData section
+          lineBarsData: [
+            //only using one line
+            LineChartBarData(
+                show: true,
+                spots: [
+                  const FlSpot(0, 1),
+                  const FlSpot(1, 0.5),
+                ],
+                color: const Color(0xff4e1dc2),
+                barWidth: 2.0, //may need to change size
+                isCurved: true,
+                isStrokeCapRound: true,
+                dotData: FlDotData(
+                    show: true
+                )
+            )
+          ],
+          titlesData: FlTitlesData(
+              show: true,
+              leftTitles: AxisTitles(
+                  axisNameWidget: const Text("Sentiment Analysis")
+              ),
+              bottomTitles: AxisTitles(
+                  axisNameWidget: const Text("Date of Entry")
+              )
+          ),
+          lineTouchData: LineTouchData(
+              touchTooltipData: LineTouchTooltipData(
+                tooltipBgColor: const Color(0xff876EC2),
+              ),
+              handleBuiltInTouches: true // may take out
+          ),
+          extraLinesData: ExtraLinesData(
+            horizontalLines: [
+            ],
+            verticalLines: [
+            ]
+          ),
+          minX: 0,
+          maxX: 5,
+          minY: 0,
+          maxY: 1,
+          clipData: FlClipData.none(),
+          backgroundColor: const Color(0xffaa9fc2)
+      ),
+      swapAnimationDuration: Duration(milliseconds: 150), // Optional
+      swapAnimationCurve: Curves.linear, // Optional
+    )
+  );
 }
 
 /*Container(
