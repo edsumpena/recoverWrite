@@ -11,10 +11,17 @@ import 'fade_animations.dart';
 
 import 'package:dart_sentiment/dart_sentiment.dart';
 import 'package:collection/collection.dart';
+import 'package:http/http.dart';
 
 class ProviderDashboard extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _ProviderDashboardState();
+}
+
+class SentimentAnalysis {
+  Future<http.Response> fetchAlbum() {
+    return http.get(Uri.parse('https://jsonplaceholder.typicode.com/albums/1'));
+  }
 }
 
 class _ProviderDashboardState extends State<ProviderDashboard> {
