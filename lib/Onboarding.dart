@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recovery_app/Login.dart';
 import 'package:recovery_app/SelectType.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -47,7 +48,6 @@ class _OnboardingState extends State<Onboarding>{
             ),
 
             BuildPage(
-
               urlImage: 'assets/images/placeholder.png',
               title: 'Cool 3',
               subtitle: 'ajvneifie fefeibidnid nbrbvinvdnve ifiefbeife nciwnbfiwbwb wnbciwbcxmcnx',
@@ -73,7 +73,7 @@ class _OnboardingState extends State<Onboarding>{
           );*/
 
           Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => SelectType()),
+            MaterialPageRoute(builder: (context) => Login()),
           );
         },
         child: const Text(
@@ -95,7 +95,13 @@ class _OnboardingState extends State<Onboarding>{
             //skip
             TextButton(
                 onPressed: () => controller.jumpToPage(2),
-                child: const Text('SKIP', style: TextStyle(fontSize: 17,),)),
+                child: const Text('SKIP',
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.indigoAccent,
+                  ),
+                )),
             //dots
             Center(
               child: SmoothPageIndicator(
@@ -119,7 +125,12 @@ class _OnboardingState extends State<Onboarding>{
                 onPressed: () => controller.nextPage(
                   duration: const Duration(milliseconds: 500),
                   curve: Curves.ease,),
-                child: const Text('NEXT', style: TextStyle(fontSize: 17,),)),
+                child: const Text('NEXT',
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.indigoAccent,
+                  ),)),
           ],
         ),
       ),
