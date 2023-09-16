@@ -1,6 +1,4 @@
-from transformers import pipeline
-from transformers import AutoModelForSequenceClassification
-from transformers import AutoTokenizer, AutoConfig
+from transformers import AutoTokenizer, AutoConfig, BartForConditionalGeneration, RobertaForSequenceClassification
 import numpy as np
 from scipy.special import softmax
 
@@ -10,13 +8,15 @@ class TextAnalysis(object):
     """
 
     def __init__(self):
-        MODEL = f"cardiffnlp/twitter-roberta-base-sentiment-latest"
-        self.sentiment_tokenizer = AutoTokenizer.from_pretrained(MODEL)
-        self.sentiment_config = AutoConfig.from_pretrained(MODEL)
+        SENTIMENT_MODEL = f"cardiffnlp/twitter-roberta-base-sentiment-latest"
+        self.sentiment_tokenizer = AutoTokenizer.from_pretrained(SENTIMENT_MODEL)
+        self.sentiment_config = AutoConfig.from_pretrained(SENTIMENT_MODEL)
         # PT
-        self.sentiment_model = AutoModelForSequenceClassification.from_pretrained(MODEL)
+        self.sentiment_model = RobertaForSequenceClassification.from_pretrained(SENTIMENT_MODEL)
 
-        self.summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
+        SUMMARIZER_MODEL = "sshleifer/distilbart-cnn-12-6"
+        self.summarizer_tokenizer = AutoTokenizer.from_pretrained(SUMMARIZER_MODEL)
+        self.summarizer_model = BartForConditionalGeneration.from_pretrained(SUMMARIZER_MODEL)
 
     # Preprocess text (username and link placeholders)
     def preprocess(text):
@@ -76,6 +76,9 @@ class TextAnalysis(object):
             Summary of the patient's journal entry.
         """
 
-        summarized_text = self.summarizer(journal_entry, max_length=200, min_length=30, do_sample=False)
+        inputs = self.summarizer_tokenizer([journal_entry], return_tensors="pt")
+        summary_ids = self.summarizer_model.generate(inputs["input_ids"], num_beams=2, min_length=0, max_length=200)
 
-        return summarized_text[0]['summary_text']
+        summarized_text = self.summarizer_tokenizer.batch_decode(summary_ids, skip_special_tokens=True, clean_up_tokenization_spaces=False)[0]
+
+        return summarized_text
