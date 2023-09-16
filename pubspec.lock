@@ -208,6 +208,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.31.0"
+  http:
+    dependency: "direct main"
+    description:
+      name: http
+      sha256: "5895291c13fa8a3bd82e76d5627f69e0d85ca6a30dcac95c4ea19a5d555879c2"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.13.6"
+  http_parser:
+    dependency: transitive
+    description:
+      name: http_parser
+      sha256: "2aa08ce0341cc9b354a498388e30986515406668dbcc4f7c950c3e715496693b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.0.2"
   intl:
     dependency: transitive
     description:
@@ -453,14 +469,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.11.0"
-  starflut:
-    dependency: "direct main"
-    description:
-      name: starflut
-      sha256: "43377329b7ad2b3c7c613d849086f68d6abf23967fe6df33026887af4986155b"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.9.5"
   stream_channel:
     dependency: transitive
     description:
@@ -534,5 +542,5 @@ packages:
     source: hosted
     version: "1.0.3"
 sdks:
-  dart: ">=2.19.0 <3.0.0"
+  dart: ">=2.19.0 <4.0.0"
   flutter: ">=3.7.0"
