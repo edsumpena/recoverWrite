@@ -27,7 +27,7 @@ class _ProviderDashboardState extends State<ProviderDashboard> {
   // Output is [-5, 5]
   // Threshold is based on | Score |
   double SENTIMENT_THRESHOLD_MEDIUM = 0.05;
-  double SENTIMENT_THRESHOLD_HIGH = 0.1;
+  double SENTIMENT_THRESHOLD_HIGH = 0.5;
 
   @override
   void initState() {
