@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:recovery_app/entry.dart';
+import 'package:recovery_app/journal_form.dart';
 
 import 'bouncing.dart';
 import 'fade_animations.dart';
@@ -24,6 +27,16 @@ class _PatientDashboardState extends State<PatientDashboard> {
         }
       },
       child: Scaffold(
+          appBar: AppBar(
+              elevation: 0.0,
+              backgroundColor: Colors.indigo,
+              leading: IconButton(
+                icon: Platform.isAndroid
+                    ? const Icon(Icons.arrow_back, color: Colors.white)
+                    : const Icon(Icons.arrow_back_ios, color: Colors.white),
+                onPressed:  () => Navigator.of(context).pop(),
+              )
+          ),
           backgroundColor: Colors.grey.shade300,
           floatingActionButton: SpeedDial(
             animatedIcon: AnimatedIcons.menu_close,
@@ -51,6 +64,9 @@ class _PatientDashboardState extends State<PatientDashboard> {
                       color: Colors.white),
                   backgroundColor: Colors.indigoAccent,
                   onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => AddEntry()),
+                    );
                   },
                   label: 'Add Journal Entry',
                   labelStyle: TextStyle(
@@ -66,7 +82,7 @@ class _PatientDashboardState extends State<PatientDashboard> {
                 children: <Widget>[
                   Container(
                     width: double.infinity,
-                    height: height * 0.4,
+                    height: height * 0.325,
                     decoration: const BoxDecoration(
                       color: Colors.indigo,
                       borderRadius: BorderRadius.only(
@@ -83,7 +99,7 @@ class _PatientDashboardState extends State<PatientDashboard> {
                             child: Column(children: <Widget>[
                               Padding(
                                 padding: EdgeInsets.only(
-                                    left: 16, right: 16, top: height * 0.1),
+                                    left: 16, right: 16, top: height * 0.02),
                                 child: Text("Hi John!",
                                     textAlign: TextAlign.center,
                                     style: TextStyle(

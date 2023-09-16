@@ -117,7 +117,7 @@ class _SelectTypeState extends State<SelectType> {
                             child: InkWell(
                               splashColor: Colors.indigo,
                               onTap: () {
-                                Navigator.of(context).pushReplacement(
+                                Navigator.of(context).push(
                                   MaterialPageRoute(builder: (context) => PatientDashboard()),
                                 );
                               },

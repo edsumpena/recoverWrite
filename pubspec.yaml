@@ -38,6 +38,7 @@ dependencies:
   flutter_form_bloc: ^0.31.0
   simple_animations: ^4.2.0
   flutter_speed_dial: ^7.0.0
+  path_provider: ^2.1.1
 
 
   # The following adds the Cupertino Icons font to your application.
