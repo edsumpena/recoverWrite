@@ -94,12 +94,8 @@ class TextAnalysis(object):
         
         summary = {}
 
-        if len(sentences) > 3:
-            summary['Negative Sentences'] = sentences[sorted_negative_sentence_idxs[-1:]]
-            summary['Positive Sentences'] = sentences[sorted_positive_sentence_idxs[-1:]]
-        else:
-            summary['Negative Sentences'] = sentences[sorted_negative_sentence_idxs[-2:]]
-            summary['Positive Sentences'] = sentences[sorted_positive_sentence_idxs[-2:]]
+        summary['Negative Sentence'] = sentences[sorted_negative_sentence_idxs[-1]]
+        summary['Positive Sentence'] = sentences[sorted_positive_sentence_idxs[-1]]
         
         return summary
 
@@ -109,8 +105,10 @@ class TextAnalysis(object):
         summary = self.get_summary(journal_entry)
 
         flask_dict = {}
-        flask_dict['Sentiment Scores'] = sentiment_score
-        flask_dict['Positive Sentences'] = summary['Positive Sentences']
-        flask_dict['Negative Sentences'] = summary['Negative Sentences']
+        flask_dict['Overall Negative Score'] = sentiment_score['negative'] 
+        flask_dict['Overall Neutral Score'] = sentiment_score['neutral']
+        flask_dict['Overall Positive Score'] = sentiment_score['positive']
+        flask_dict['Positive Sentences'] = summary['Positive Sentence']
+        flask_dict['Negative Sentences'] = summary['Negative Sentence']
 
         return flask_dict
