@@ -38,11 +38,11 @@ class TextAnalysis(object):
 
         Returns
         -------
-        sentiment_scores : dict
-            The softmax probabilities for the journal entry to be classified with a particular sentiment {negative, neutral, positive}.
-        
-        summary : dict
-            A dictionary containing the most positive and negative sentiment sentences of the patient's journal entry.
+        sentences : list
+            All the sentences of the journal entry.
+
+        sentiment_per_sentence : list
+            The sentiment score (negative, neutral, positive) of each sentence in the journal entry.
         """
         text = TextAnalysis.preprocess(journal_entry) # THIS IS THE TEXT THAT PROMPTS THE USER
         sentences = text.split(".")
@@ -57,6 +57,38 @@ class TextAnalysis(object):
 
         sentences = np.asarray(sentences)
         sentiment_per_sentence = np.asarray(sentiment_per_sentence)
+
+        return sentences, sentiment_per_sentence
+        
+    def get_sentiment_scores(self, journal_entry):
+        """Get the overall sentiment score of the entire journal entry."""
+        _, sentiment_per_sentence = self.sentiment_analysis(journal_entry)
+
+        sentiment_scores = {} # THIS IS THE DICTIONARY WITH THE SENTIMENT SCORES
+        for i in range(sentiment_per_sentence.shape[1]):
+            l = self.sentiment_config.id2label[i]
+            s = sentiment_per_sentence[:, i].mean()
+            sentiment_scores[f'{l}'] = np.round(float(s), 4)
+        
+        return sentiment_scores
+
+    def get_summary(self, journal_entry:str):
+        """
+        Summarizes a body of text to include some of the main points and sentiments.
+
+        Parameters
+        ----------
+        journal_entry : str, required
+            The patient's journal entry that will be summarized.
+
+        Returns
+        -------
+        summary : str
+            Summary of the patient's journal entry (ie top emotionally positive and negative sentences).
+        """
+
+        sentences, sentiment_per_sentence = self.sentiment_analysis(journal_entry)
+
         sorted_negative_sentence_idxs = np.argsort(sentiment_per_sentence[:, 0])
         sorted_positive_sentence_idxs = np.argsort(sentiment_per_sentence[:, 2])
         
@@ -68,37 +100,17 @@ class TextAnalysis(object):
         else:
             summary['Negative Sentences'] = sentences[sorted_negative_sentence_idxs[-2:]]
             summary['Positive Sentences'] = sentences[sorted_positive_sentence_idxs[-2:]]
-
-        # Print labels and scores
-        # ranking = np.argsort(scores)
-        # ranking = ranking[::-1]
-        sentiment_scores = {} # THIS IS THE DICTIONARY WITH THE SENTIMENT SCORES
-        for i in range(scores.shape[0]):
-            l = self.sentiment_config.id2label[i]
-            s = sentiment_per_sentence[:, i].mean()
-            sentiment_scores[f'{l}'] = np.round(float(s), 4)
-
-        return sentiment_scores, summary
         
+        return summary
 
-    # def summarize(self, journal_entry:str):
-    #     """
-    #     Summarizes a body of text to include some of the main points and sentiments.
+    def create_flask_dict(self, journal_entry):
+        """Create a dictionary that will be used for the flask backend"""
+        sentiment_score = self.get_sentiment_scores(journal_entry)
+        summary = self.get_summary(journal_entry)
 
-    #     Parameters
-    #     ----------
-    #     journal_entry : str, required
-    #         The patient's journal entry that will be summarized.
+        flask_dict = {}
+        flask_dict['Sentiment Scores'] = sentiment_score
+        flask_dict['Positive Sentences'] = summary['Positive Sentences']
+        flask_dict['Negative Sentences'] = summary['Negative Sentences']
 
-    #     Returns
-    #     -------
-    #     summarized_text : str
-    #         Summary of the patient's journal entry.
-    #     """
-
-    #     inputs = self.summarizer_tokenizer([journal_entry], return_tensors="pt")
-    #     summary_ids = self.summarizer_model.generate(inputs["input_ids"], num_beams=2, min_length=0, max_length=200)
-
-    #     summarized_text = self.summarizer_tokenizer.batch_decode(summary_ids, skip_special_tokens=True, clean_up_tokenization_spaces=False)[0]
-
-    #     return summarized_text
+        return flask_dict
