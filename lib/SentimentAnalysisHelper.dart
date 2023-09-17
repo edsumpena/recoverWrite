@@ -2,8 +2,12 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
+import 'package:dart_sentiment/dart_sentiment.dart';
 
 class SentimentAnalysis {
+  final sent_analyzer = Sentiment();
+  final USE_STABLE = true;
+
   Future<List<double>> fetchSentiments(List<String> inputs) async {
     List<double> results = [];
     for (String input in inputs) {
@@ -13,7 +17,15 @@ class SentimentAnalysis {
     return Future(() => results);
   }
 
+  double fetchSentimentStable(String input) {
+    return sent_analyzer.analysis(input)['comparative'] / 10 + 0.5;
+  }
+
   Future<double> fetchSentiment(String input) async {
+    if (USE_STABLE) {
+      return Future(() => fetchSentimentStable(input));
+    }
+
     final url = Uri.parse('https://recoverwrite.azurewebsites.net/sentiment'); // Replace with your API endpoint
     final headers = {'Content-Type': 'application/json'};
 
