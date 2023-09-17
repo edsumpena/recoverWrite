@@ -45,7 +45,7 @@ class _SelectTypeState extends State<SelectType> {
                     blurRadius: 25,
                   ),
                 ]),
-            margin: EdgeInsets.symmetric(vertical: height * 0.3),
+            //margin: EdgeInsets.symmetric(vertical: height * 0.1),
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -53,6 +53,7 @@ class _SelectTypeState extends State<SelectType> {
                     'I am a...',
                     textAlign: TextAlign.center,
                     style: TextStyle(
+                      color: const Color(0xff4e1dc2),
                       fontSize: width * 0.1,
                       fontWeight: FontWeight.bold,
                       fontFamily: 'Poppins',
@@ -61,66 +62,19 @@ class _SelectTypeState extends State<SelectType> {
                   SizedBox(
                     height: height * 0.05,
                   ),
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  //Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    // Patient
                     FadeAnimation(
                       1,
                         Bouncing(
                           onPress: () {},
                           child: SizedBox.fromSize(
-                        size: Size(width * 0.4, width * 0.4),
+                        size: Size(width * 0.5, width * 0.5),
                         child: ClipOval(
                           child: Material(
-                            color: Colors.indigoAccent,
+                            color: Color(0xff876EC2),
                             child: InkWell(
-                              splashColor: Colors.indigo,
-                              onTap: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(builder: (context) => ProviderDashboard()),
-                                );
-                              },
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Image.asset(
-                                    "assets/images/provider.png",
-                                    width: width * 0.15,
-                                    height: width * 0.15,
-                                  ),
-                                  SizedBox(
-                                    height: height * 0.01,
-                                  ),
-                                  Text(
-                                    "Healthcare Provider",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: width * 0.05,
-                                      fontFamily: 'Poppins',
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                          ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: width * 0.1,
-                    ),
-                    FadeAnimation(
-                      1,
-                        Bouncing(
-                          onPress: () {},
-                          child: SizedBox.fromSize(
-                        size: Size(width * 0.4, width * 0.4),
-                        child: ClipOval(
-                          child: Material(
-                            color: Colors.indigoAccent,
-                            child: InkWell(
-                              splashColor: Colors.indigo,
+                              splashColor: Color(0xff876EC2),
                               onTap: () {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(builder: (context) => PatientDashboard()),
@@ -130,9 +84,9 @@ class _SelectTypeState extends State<SelectType> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
                                   Image.asset(
-                                    "assets/images/patient.png",
-                                    width: width * 0.15,
-                                    height: width * 0.15,
+                                    "assets/images/PatientProfile.png",
+                                    width: width * 0.35,
+                                    height: width * 0.35,
                                   ),
                                   SizedBox(
                                     height: height * 0.01,
@@ -152,8 +106,59 @@ class _SelectTypeState extends State<SelectType> {
                             ),
                           ),
                         ),
+                          ),
                       ),
+                    ),
+                    SizedBox(
+                      height: height * 0.05,
+                    ),
+                  //]),
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    // Healthcare provider
+                    FadeAnimation(
+                      1,
+                      Bouncing(
+                        onPress: () {},
+                        child: SizedBox.fromSize(
+                          size: Size(width * 0.5, width * 0.5),
+                          child: ClipOval(
+                            child: Material(
+                              color: const Color(0xff4e1dc2),
+                              child: InkWell(
+                                splashColor: const Color(0xff4e1dc2),
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(builder: (context) => ProviderDashboard()),
+                                  );
+                                },
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Image.asset(
+                                      "assets/images/HealthcareProvider.png",
+                                      width: width * 0.35,
+                                      height: width * 0.35,
+                                    ),
+                                    SizedBox(
+                                      height: height * 0.01,
+                                    ),
+                                    Text(
+                                      "Healthcare\nProvider",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: width * 0.05,
+                                        fontFamily: 'Poppins',
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
+                      ),
                     )
                   ])
                 ])));

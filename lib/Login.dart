@@ -72,7 +72,7 @@ class _LoginState extends State<Login> {
                   top: height * 0.085,
                   bottom: height * 0.025),
               child: Image.asset(
-                "assets/images/doctor-patient.png",
+                "assets/images/recoverWriteLogo.png",
                 width: width * 0.675,
                 height: width * 0.675,
               ),
@@ -88,9 +88,9 @@ class _LoginState extends State<Login> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    'Login',
+                    'Welcome back!',
                     style: TextStyle(
-                      color: Colors.indigoAccent,
+                      color: const Color(0xff4e1dc2),
                       fontSize: 27,
                       fontFamily: 'Poppins',
                       fontWeight: FontWeight.w500,
@@ -111,7 +111,7 @@ class _LoginState extends State<Login> {
                     decoration: const InputDecoration(
                       labelText: 'Email',
                       labelStyle: TextStyle(
-                        color: Colors.indigoAccent,
+                        color: Color(0xff876EC2),
                         fontSize: 15,
                         fontFamily: 'Poppins',
                         fontWeight: FontWeight.w600,
@@ -120,14 +120,14 @@ class _LoginState extends State<Login> {
                         borderRadius: BorderRadius.all(Radius.circular(10)),
                         borderSide: BorderSide(
                           width: 1,
-                          color: Colors.blueAccent,
+                          color: Color(0xff876EC2),
                         ),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10)),
                         borderSide: BorderSide(
                           width: 1,
-                          color: Colors.indigoAccent,
+                          color: Color(0xff876EC2),
                         ),
                       ),
                     ),
@@ -150,7 +150,7 @@ class _LoginState extends State<Login> {
                     decoration: const InputDecoration(
                       labelText: 'Password',
                       labelStyle: TextStyle(
-                        color: Colors.indigoAccent,
+                        color: Color(0xff876EC2),
                         fontSize: 15,
                         fontFamily: 'Poppins',
                         fontWeight: FontWeight.w600,
@@ -159,14 +159,14 @@ class _LoginState extends State<Login> {
                         borderRadius: BorderRadius.all(Radius.circular(10)),
                         borderSide: BorderSide(
                           width: 1,
-                          color: Colors.blueAccent,
+                          color: Color(0xff876EC2),
                         ),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10)),
                         borderSide: BorderSide(
                           width: 1,
-                          color: Colors.indigoAccent,
+                          color: Color(0xff876EC2),
                         ),
                       ),
                     ),
@@ -189,13 +189,13 @@ class _LoginState extends State<Login> {
                             );
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.indigoAccent,
+                            backgroundColor: Color(0xff4e1dc2),
                           ),
                           child: const Text(
                             'Login',
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 17,
+                              fontSize: 18,
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.w500,
                             ),
@@ -218,7 +218,7 @@ class _LoginState extends State<Login> {
                             'Don\'t have an account? Sign Up',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: Colors.indigoAccent,
+                              color: Color(0xffaa9fc2),
                               fontSize: 13,
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.w500,
@@ -231,7 +231,7 @@ class _LoginState extends State<Login> {
                             'Forget Password?',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: Colors.indigoAccent,
+                              color: Color(0xffaa9fc2),
                               fontSize: 13,
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.w500,

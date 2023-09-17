@@ -27,7 +27,7 @@ class _ProviderDashboardState extends State<ProviderDashboard> {
   // Output is [-5, 5]
   // Threshold is based on | Score |
   double SENTIMENT_THRESHOLD_MEDIUM = 0.05;
-  double SENTIMENT_THRESHOLD_HIGH = 0.5;
+  double SENTIMENT_THRESHOLD_HIGH = 0.1;
 
   @override
   void initState() {
@@ -119,7 +119,7 @@ class _ProviderDashboardState extends State<ProviderDashboard> {
       child: Scaffold(
           appBar: AppBar(
               elevation: 0.0,
-              backgroundColor: Colors.indigo,
+              backgroundColor: const Color(0xff4e1dc2),
               leading: IconButton(
                 icon: Platform.isAndroid
                     ? const Icon(Icons.arrow_back, color: Colors.white)
@@ -135,7 +135,7 @@ class _ProviderDashboardState extends State<ProviderDashboard> {
                     width: double.infinity,
                     height: height * 0.325,
                     decoration: const BoxDecoration(
-                      color: Colors.indigo,
+                      color: const Color(0xff4e1dc2),
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(20),
                         bottomRight: Radius.circular(20),
@@ -156,7 +156,7 @@ class _ProviderDashboardState extends State<ProviderDashboard> {
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
-                                      fontSize: width * 0.10,
+                                      fontSize: width * 0.1,
                                     )),
                               ),
                               Padding(
@@ -201,7 +201,7 @@ class _ProviderDashboardState extends State<ProviderDashboard> {
                                                       text: TextSpan(children: [
                                                         TextSpan(
                                                             text:
-                                                                "Days on Regiment:\n",
+                                                                "Number of Patients:\n",
                                                             style: TextStyle(
                                                               fontSize:
                                                                   width * 0.06,
@@ -212,7 +212,7 @@ class _ProviderDashboardState extends State<ProviderDashboard> {
                                                                       .w600,
                                                             )),
                                                         TextSpan(
-                                                            text: "5",
+                                                            text: "1",
                                                             style: TextStyle(
                                                                 fontSize:
                                                                     width *

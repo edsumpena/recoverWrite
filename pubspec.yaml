@@ -76,6 +76,10 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/images/recoverWriteLogo.png
+    - assets/images/record.png
+    - assets/images/recover.png
+    - assets/images/reflect.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

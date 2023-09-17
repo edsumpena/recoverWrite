@@ -37,21 +37,21 @@ class _OnboardingState extends State<Onboarding>{
           children: const [
 
             BuildPage(
-              urlImage: 'assets/images/placeholder.png',
-              title: 'Cool',
-              subtitle: 'ajvneifiefefei bidnidnbrbvinvdnve ifiefbeife nciwnbfiwbwb wnbciwbcxmcnx',
+              urlImage: 'assets/images/record.png',
+              title: '1. Record',
+              subtitle: 'Log your daily thoughts and symptoms with toggles and journal entries.',
             ),
 
             BuildPage(
-              urlImage: 'assets/images/placeholder.png',
-              title: 'Cool 2',
-              subtitle: 'ajvneifiefefeib idnidnbrbvinvdnve ifiefbeife nciwnbfiwbwb wnbciwbcxmcnx',
+              urlImage: 'assets/images/reflect.png',
+              title: '2. Reflect',
+              subtitle: 'Send your log to your healthcare provider and review your analysis over time ',
             ),
 
             BuildPage(
-              urlImage: 'assets/images/placeholder.png',
-              title: 'Cool 3',
-              subtitle: 'ajvneifie fefeibidnid nbrbvinvdnve ifiefbeife nciwnbfiwbwb wnbciwbcxmcnx',
+              urlImage: 'assets/images/recover.png',
+              title: '3. Recover',
+              subtitle: 'Build your relationship with your healthcare provider and focus on your journey',
             ),
 
           ],
@@ -62,7 +62,7 @@ class _OnboardingState extends State<Onboarding>{
           ? TextButton(
         style: TextButton.styleFrom(
           foregroundColor: Colors.white,
-          backgroundColor: Colors.indigoAccent,
+          backgroundColor: const Color(0xff4e1dc2),
           minimumSize: Size.fromHeight(height * 0.075),
         ),
         onPressed: () async{
@@ -100,7 +100,7 @@ class _OnboardingState extends State<Onboarding>{
                   style: TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.bold,
-                    color: Colors.indigoAccent,
+                    color: Color(0xff4e1dc2),
                   ),
                 )),
             //dots
@@ -111,7 +111,7 @@ class _OnboardingState extends State<Onboarding>{
                 effect: WormEffect(
                   spacing: width * 0.05,
                   dotColor: Colors.black26,
-                  activeDotColor: Colors.indigoAccent,
+                  activeDotColor: const Color(0xff4e1dc2),
                 ),
                 //to click on dots and move
                 onDotClicked: (index) => controller.animateToPage(
@@ -130,7 +130,7 @@ class _OnboardingState extends State<Onboarding>{
                   style: TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.bold,
-                    color: Colors.indigoAccent,
+                    color: Color(0xff4e1dc2),
                   ),)),
           ],
         ),

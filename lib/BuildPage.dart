@@ -31,7 +31,7 @@ class BuildPage extends StatelessWidget {
             title,
             textAlign: TextAlign.center,
             style: const TextStyle(
-              color: Colors.indigoAccent,
+              color: Color(0xff4e1dc2),
               fontSize: 22,
               fontWeight: FontWeight.bold,
             ),
@@ -45,7 +45,7 @@ class BuildPage extends StatelessWidget {
               subtitle,
               textAlign: TextAlign.center,
               style: const TextStyle(
-                color: Colors.grey,
+                color: Colors.black,
                 fontSize: 17,
                 height: 1.5,
               ),

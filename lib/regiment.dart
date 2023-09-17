@@ -43,9 +43,9 @@ class _RegimentState extends State<Regiment> with SingleTickerProviderStateMixin
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
-    double bigHeight = height * 0.21;
-    double foldedHeight1 = height * 0.125;
-    double foldedHeight2 = height * 0.14;
+    double bigHeight = height * 0.235;
+    double foldedHeight1 = height * 0.15;
+    double foldedHeight2 = height * 0.15;
     double foldedHeight3 = height * 0.1725;
 
     return GestureDetector(
@@ -75,7 +75,7 @@ class _RegimentState extends State<Regiment> with SingleTickerProviderStateMixin
                             flex: 3,
                             child: Container(
                                 decoration: BoxDecoration(
-                                  color: Colors.indigoAccent,
+                                  color: const Color(0xff4e1dc2),
                                   borderRadius: BorderRadius.vertical(
                                       top: Radius.circular(width * 0.035)),
                                 ),
@@ -94,7 +94,7 @@ class _RegimentState extends State<Regiment> with SingleTickerProviderStateMixin
                                           ),
                                           child: const Center(
                                             child: Text(
-                                              "Weeks 1 - 10 Regiment",
+                                              "Exercises for Weeks 1-10",
                                               style: TextStyle(
                                                   fontSize: 22,
                                                   fontWeight: FontWeight.bold,
@@ -123,19 +123,19 @@ class _RegimentState extends State<Regiment> with SingleTickerProviderStateMixin
                                                 fontSize: 18,
                                                 fontWeight: FontWeight.bold,
                                                 overflow: TextOverflow.ellipsis,
-                                                color: Colors.grey),
+                                                color: Colors.black),
                                             maxLines: 1,
                                           ),
-                                          SizedBox(height: height * 0.0075),
                                           const Text(
-                                            "Take a nap, go to sleep.",
+                                            "Exercise: Do 10 shoulder rolls\nPurpose: Increase range of motion",
                                             style: TextStyle(
-                                                fontSize: 14,
+                                                fontSize: 16,
                                                 fontWeight: FontWeight.bold,
                                                 overflow: TextOverflow.ellipsis,
-                                                color: Colors.grey),
-                                            maxLines: 5,
+                                                color: Color(0xff5a5a5a)),
+                                            maxLines: 3,
                                           ),
+
                                           SizedBox(height: height * 0.004),
                                         ])))),
                       ]))),
@@ -153,7 +153,7 @@ class _RegimentState extends State<Regiment> with SingleTickerProviderStateMixin
                             flex: 1,
                             child: Container(
                                 decoration: BoxDecoration(
-                                  color: Colors.indigoAccent,
+                                  color: const Color(0xff4e1dc2),
                                   borderRadius: BorderRadius.only(
                                       topLeft: Radius.circular(width * 0.035),
                                       topRight: Radius.circular(width * 0.035)),
@@ -174,7 +174,7 @@ class _RegimentState extends State<Regiment> with SingleTickerProviderStateMixin
                                               maxHeight: height * 0.035,
                                             ),
                                             child: const Text(
-                                              "Weeks 1 - 10 Regiment",
+                                              "Exercises for Weeks 1-10",
                                               style: TextStyle(
                                                 fontSize: 22,
                                                 color: Colors.white,
@@ -207,37 +207,26 @@ class _RegimentState extends State<Regiment> with SingleTickerProviderStateMixin
                                         children: [
                                           ConstrainedBox(
                                             constraints: BoxConstraints(
-                                              minWidth: width * 0.625,
-                                              maxWidth: width * 0.625,
-                                              minHeight: height * 0.030,
-                                              maxHeight: height * 0.030,
+                                              minWidth: width * 0.725,
+                                              maxWidth: width * 0.725,
+                                              minHeight: height * 0.12,
+                                              maxHeight: height * 0.12,
                                             ),
-                                            child: const Text("Summary:",
+                                            child: const Text("Summary: Complete 3x a week for 1 hour\n\nClick for more details",
                                                 style: TextStyle(
                                                     fontSize: 18,
                                                     fontWeight:
                                                         FontWeight.bold),
                                                 overflow: TextOverflow.ellipsis,
-                                                maxLines: 1),
+                                                maxLines: 4),
                                           ),
                                           SizedBox(height: height * 0.0075),
-                                          ConstrainedBox(
-                                            constraints: BoxConstraints(
-                                              minWidth: width * 0.625,
-                                              maxWidth: width * 0.625,
-                                              minHeight: height * 0.030,
-                                              maxHeight: height * 0.030,
-                                            ),
-                                            child: const Text("Do some cool stuff",
-                                                style: TextStyle(
-                                                    fontSize: 14),
-                                                overflow: TextOverflow.ellipsis,),
-                                          ),
+
                                         ])))),
                       ]))),
           next: Column(
             children: [
-              _section1(foldedHeight1, context, "Step 2:", "Go out, drink a beer."),
+              _section1(foldedHeight1, context, "Step 2:", "Exercise: Do 3 sets of 12 lateral raises\nPurpose: Increase range of motion"),
               AnimatedFoldingWidget(
                 animation: Tween(begin: 0.0, end: 1.0).animate(
                   CurvedAnimation(
@@ -249,12 +238,12 @@ class _RegimentState extends State<Regiment> with SingleTickerProviderStateMixin
                     ),
                   ),
                 ),
-                behind: _section1(foldedHeight2, context, "Step 3:", "Pass out on your bed, sleep 'til noon."),
+                behind: _section1(foldedHeight2, context, "Step 3:", "Exercise: Do 3 sets of 5 tricep dips\nPurpose: Build muscle in upper body"),
                 front: Container(
                   height: foldedHeight2,
                   color: Colors.white,
                 ),
-                next: _section1(foldedHeight3, context, "Step 4:", "Realize that hangovers suck."),
+                next: _section1(foldedHeight3, context, "Step 4:", "Exercise: Do deep breathing for 5 minutes\nPurpose: Increase aerobic respiration"),
               ),
             ],
           ),
@@ -286,8 +275,8 @@ class _RegimentState extends State<Regiment> with SingleTickerProviderStateMixin
                                   children: [
                                     ConstrainedBox(
                                       constraints: BoxConstraints(
-                                        minWidth: width * 0.55,
-                                        maxWidth: width * 0.55,
+                                        minWidth: width * 0.75,
+                                        maxWidth: width * 0.75,
                                         minHeight: height * 0.0305,
                                         maxHeight: height * 0.0305,
                                       ),
@@ -297,7 +286,7 @@ class _RegimentState extends State<Regiment> with SingleTickerProviderStateMixin
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold,
                                             overflow: TextOverflow.ellipsis,
-                                            color: Colors.grey),
+                                            color: Colors.black),
                                         maxLines: 1,
                                       ),
                                     ),
@@ -306,16 +295,16 @@ class _RegimentState extends State<Regiment> with SingleTickerProviderStateMixin
                                       constraints: BoxConstraints(
                                         minWidth: width * 0.70,
                                         maxWidth: width * 0.70,
-                                        minHeight: height * 0.05,
-                                        maxHeight: height * 0.05,
+                                        minHeight: height * 0.075,
+                                        maxHeight: height * 0.075,
                                       ),
                                       child: Text(
                                         content,
                                         style: const TextStyle(
-                                            fontSize: 14,
+                                            fontSize: 16,
                                             fontWeight: FontWeight.bold,
                                             overflow: TextOverflow.ellipsis,
-                                            color: Colors.grey),
+                                            color: Color(0xff5a5a5a)),
                                         maxLines: 5,
                                       ),
                                     ),

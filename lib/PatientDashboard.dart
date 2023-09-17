@@ -220,17 +220,12 @@ class _PatientDashboardState extends State<PatientDashboard> {
                               text: TextSpan(children: [
                                 TextSpan(
                                     text:
-                                    "Assigned by:\n",
+                                    "Assigned by: Dr. House M.D.",
                                     style: TextStyle(
                                       fontSize: width * 0.04,
                                       color: Colors.black,
                                       fontWeight: FontWeight.w600,
                                     )),
-                                TextSpan(
-                                    text: "Dr. House M.D.",
-                                    style: TextStyle(
-                                        fontSize: width * 0.09,
-                                        color: Colors.black))
                               ])),
                         ])))),
         SizedBox(height: height * 0.04),
@@ -259,6 +254,7 @@ Widget _buildPatientAnalysis(BuildContext context) {
                 spots: [
                   const FlSpot(0, 1),
                   const FlSpot(1, 0.5),
+                  const FlSpot(4, 0.5),
                 ],
                 color: const Color(0xff4e1dc2),
                 barWidth: 2.0, //may need to change size
@@ -286,8 +282,58 @@ Widget _buildPatientAnalysis(BuildContext context) {
           ),
           extraLinesData: ExtraLinesData(
             horizontalLines: [
+              HorizontalLine(
+                y: 0.1,
+                color: const Color(0xffaa9fc2),
+                strokeWidth: 1
+              ),
+              HorizontalLine(
+                y: 0.3,
+                color: const Color(0xffaa9fc2),
+                strokeWidth: 1
+              ),
+              HorizontalLine(
+                y: 0.5,
+                color: const Color(0xffaa9fc2),
+                strokeWidth: 1
+              ),
+              HorizontalLine(
+                y: 0.7,
+                color: const Color(0xffaa9fc2),
+                strokeWidth: 1
+              ),
+              HorizontalLine(
+                y: 0.9,
+                color: const Color(0xffaa9fc2),
+                strokeWidth: 1
+              )
             ],
             verticalLines: [
+              VerticalLine(
+                x: 0.5,
+                color: const Color(0xffaa9fc2),
+                strokeWidth: 1
+              ),
+              VerticalLine(
+                x: 1.5,
+                color: const Color(0xffaa9fc2),
+                strokeWidth: 1
+              ),
+              VerticalLine(
+                x: 2.5,
+                color: const Color(0xffaa9fc2),
+                strokeWidth: 1
+              ),
+              VerticalLine(
+                x: 3.5,
+                color: const Color(0xffaa9fc2),
+                strokeWidth: 1
+              ),
+              VerticalLine(
+                x: 4.5,
+                color: const Color(0xffaa9fc2),
+                strokeWidth: 1
+              ),
             ]
           ),
           minX: 0,
@@ -295,7 +341,7 @@ Widget _buildPatientAnalysis(BuildContext context) {
           minY: 0,
           maxY: 1,
           clipData: FlClipData.none(),
-          backgroundColor: const Color(0xffaa9fc2)
+          backgroundColor: const Color(0xffffffff)
       ),
       swapAnimationDuration: Duration(milliseconds: 150), // Optional
       swapAnimationCurve: Curves.linear, // Optional
