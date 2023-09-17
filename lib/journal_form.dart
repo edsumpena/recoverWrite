@@ -10,13 +10,16 @@ import 'package:path_provider/path_provider.dart';
 import 'bouncing.dart';
 
 class AddEntry extends StatefulWidget {
-  const AddEntry({Key? key}) : super(key: key);
+  final ValueSetter<String> addEntryCallback;
+  const AddEntry({Key? key, required this.addEntryCallback}) : super(key: key);
 
   @override
-  State<AddEntry> createState() => AddEntryMain();
+  State<AddEntry> createState() => AddEntryMain(addEntryCallback: addEntryCallback);
 }
 
 class AddEntryBloc extends FormBloc<String, String> {
+  final ValueSetter<String> addEntryCallback;
+
   final completeRegiment = SelectFieldBloc(
       name: 'Completed the regiment?',
       items: ['Yes', 'No'],
@@ -44,7 +47,7 @@ class AddEntryBloc extends FormBloc<String, String> {
           'Feelings about regiment? Challenges?',
       validators: []);
 
-  AddEntryBloc() {
+  AddEntryBloc({required this.addEntryCallback}) {
     addFieldBlocs(
       fieldBlocs: [
         completeRegiment,
@@ -80,6 +83,8 @@ class AddEntryBloc extends FormBloc<String, String> {
       print(journal.value);
     }
 
+    addEntryCallback(journal.value);
+
     HashMap<String, List<String>> log = HashMap<String, List<String>>();
 
     log["completeRegiment"] = [completeRegiment.value!];
@@ -104,6 +109,10 @@ class AddEntryBloc extends FormBloc<String, String> {
 }
 
 class AddEntryMain extends State<AddEntry> {
+  final ValueSetter<String> addEntryCallback;
+
+  AddEntryMain({required this.addEntryCallback});
+
   bool sendProvider = false;
   @override
   Widget build(BuildContext context) {
@@ -120,7 +129,7 @@ class AddEntryMain extends State<AddEntry> {
         ),
       ),
       child: BlocProvider(
-        create: (context) => AddEntryBloc(),
+        create: (context) => AddEntryBloc(addEntryCallback: addEntryCallback),
         child: Builder(builder: (context) {
           final addEntryBloc = context.read<AddEntryBloc>();
 

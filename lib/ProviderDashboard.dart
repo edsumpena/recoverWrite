@@ -41,67 +41,66 @@ class _ProviderDashboardState extends State<ProviderDashboard> {
     final dataDir = await getApplicationDocumentsDirectory();
     final sent_analyzer = Sentiment();
 
-    while (true) {
-      final dir = Directory('${dataDir.path}/Entries');
 
-      await dir.create(recursive: true).then((value) async {
-        if (dir.existsSync()) {
-          List<FileSystemEntity> entities = await dir.list().toList();
-          Iterable<File> files = entities.whereType<File>();
+    final dir = Directory('${dataDir.path}/Entries');
 
-          List<Map<String, dynamic>> entries_tmp = [];
-          List<double> sentiment_tmp = [];
+    await dir.create(recursive: true).then((value) async {
+      if (dir.existsSync()) {
+        List<FileSystemEntity> entities = await dir.list().toList();
+        Iterable<File> files = entities.whereType<File>();
 
-          for (File f in files) {
-            String entryJson = await f.readAsString();
+        List<Map<String, dynamic>> entries_tmp = [];
+        List<double> sentiment_tmp = [];
 
-            if (entryJson.isNotEmpty) {
-              Map<String, dynamic> entry = json.decode(entryJson);
-              double sent = 0.0;
+        for (File f in files) {
+          String entryJson = await f.readAsString();
 
-              if (entry['journal']![0].isNotEmpty) {
-                sent =
-                    sent_analyzer.analysis(entry['journal']![0])['comparative'];
-              }
+          if (entryJson.isNotEmpty) {
+            Map<String, dynamic> entry = json.decode(entryJson);
+            double sent = 0.0;
 
-              entries_tmp.add(entry);
-              sentiment_tmp.add(sent);
-
-              if (kDebugMode) {
-                print(entry['journal']![0]);
-                print(sent);
-              }
-            }
-          }
-
-          if (!const ListEquality().equals(entries_tmp, entries)) {
-            int flagged_entry_tmp = -1;
-            int sentiment_risk_tmp = 0;
-
-            for (int i = 0; i < sentiment_tmp.length; i++) {
-              if (sentiment_tmp[i].abs() >= SENTIMENT_THRESHOLD_MEDIUM) {
-                flagged_entry_tmp = i;
-
-                if (sentiment_tmp[i].abs() >= SENTIMENT_THRESHOLD_HIGH) {
-                  sentiment_risk_tmp = 2;
-                } else {
-                  sentiment_risk_tmp = 1;
-                }
-              }
+            if (entry['journal']![0].isNotEmpty) {
+              sent =
+                  sent_analyzer.analysis(entry['journal']![0])['comparative'];
             }
 
-            setState(() {
-              flagged_entry = flagged_entry_tmp;
-              entries = entries_tmp;
-              sentiment = sentiment_tmp;
-              sentiment_risk = sentiment_risk_tmp;
-            });
+            entries_tmp.add(entry);
+            sentiment_tmp.add(sent);
+
+            if (kDebugMode) {
+              print(entry['journal']![0]);
+              print(sent);
+            }
           }
         }
-      });
 
-      await Future.delayed(const Duration(milliseconds: 3000));
-    }
+        if (!const ListEquality().equals(entries_tmp, entries)) {
+          int flagged_entry_tmp = -1;
+          int sentiment_risk_tmp = 0;
+
+          for (int i = 0; i < sentiment_tmp.length; i++) {
+            if (sentiment_tmp[i].abs() >= SENTIMENT_THRESHOLD_MEDIUM) {
+              flagged_entry_tmp = i;
+
+              if (sentiment_tmp[i].abs() >= SENTIMENT_THRESHOLD_HIGH) {
+                sentiment_risk_tmp = 2;
+              } else {
+                sentiment_risk_tmp = 1;
+              }
+            }
+          }
+
+          setState(() {
+            flagged_entry = flagged_entry_tmp;
+            entries = entries_tmp;
+            sentiment = sentiment_tmp;
+            sentiment_risk = sentiment_risk_tmp;
+          });
+        }
+      }
+    });
+
+    await Future.delayed(const Duration(milliseconds: 3000));
   }
 
   @override

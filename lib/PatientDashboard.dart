@@ -1,7 +1,9 @@
+import 'dart:core';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:recovery_app/SentimentAnalysisHelper.dart';
 import 'package:recovery_app/regiment.dart';
 import 'package:recovery_app/journal_form.dart';
 
@@ -14,7 +16,34 @@ class PatientDashboard extends StatefulWidget {
   State<StatefulWidget> createState() => _PatientDashboardState();
 }
 
-class _PatientDashboardState extends State<PatientDashboard> {
+class _PatientDashboardState extends State<PatientDashboard>{
+
+  List<double> sentimentScores = [];
+  List<FlSpot> points = [const FlSpot(0,0)];
+  bool showMe = true;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  final sentimentAnalysis = SentimentAnalysis();
+
+  void addEntry(String entry) async {
+    double score = await sentimentAnalysis.fetchSentiment(entry);
+    sentimentScores.add(score);
+
+    final double x = sentimentScores.length * 1.0;
+    final y = score;
+    FlSpot spot = FlSpot(x, y);
+    points.add(spot);
+    setState(() {
+      sentimentScores;
+      points;
+      showMe = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -67,7 +96,7 @@ class _PatientDashboardState extends State<PatientDashboard> {
                   backgroundColor: const Color (0xffaa9fc2),
                   onTap: () {
                     Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => AddEntry()),
+                      MaterialPageRoute(builder: (context) => AddEntry(addEntryCallback: addEntry)),
                     );
                   },
                   label: 'Add Journal Entry',
@@ -166,14 +195,14 @@ class _PatientDashboardState extends State<PatientDashboard> {
                   ),
                   FadeAnimation(
                     2.0,
-                    _buildPatientDashboard(context),
+                    _buildPatientDashboard(context, points, showMe),
                   ),
                 ],
               ))),
     );
   }
 
-  Widget _buildPatientDashboard(BuildContext context) {
+  Widget _buildPatientDashboard(BuildContext context, List<FlSpot> points, bool showMe) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
@@ -229,14 +258,14 @@ class _PatientDashboardState extends State<PatientDashboard> {
                               ])),
                         ])))),
         SizedBox(height: height * 0.04),
-        _buildPatientAnalysis(context),
+        _buildPatientAnalysis(context, points, showMe),
         SizedBox(height: height * 0.04),
       ]),
     );
   }
 }
 
-Widget _buildPatientAnalysis(BuildContext context) {
+Widget _buildPatientAnalysis(BuildContext context, List<FlSpot> points, bool showMe) {
   double width = MediaQuery.of(context).size.width;
   double height = MediaQuery.of(context).size.height;
 
@@ -250,12 +279,8 @@ Widget _buildPatientAnalysis(BuildContext context) {
           lineBarsData: [
             //only using one line
             LineChartBarData(
-                show: true,
-                spots: [
-                  const FlSpot(0, 1),
-                  const FlSpot(1, 0.5),
-                  const FlSpot(4, 0.5),
-                ],
+                show: showMe,
+                spots: points,
                 color: const Color(0xff4e1dc2),
                 barWidth: 2.0, //may need to change size
                 isCurved: true,
