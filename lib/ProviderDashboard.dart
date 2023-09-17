@@ -150,12 +150,12 @@ class _ProviderDashboardState extends State<ProviderDashboard> {
                               Padding(
                                 padding: EdgeInsets.only(
                                     left: 16, right: 16, top: height * 0.02),
-                                child: Text("Hi Dr. House M.D.!",
+                                child: Text("Hi Dr. House M.D.",
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
-                                      fontSize: width * 0.1,
+                                      fontSize: width * 0.07,
                                     )),
                               ),
                               Padding(
@@ -203,7 +203,7 @@ class _ProviderDashboardState extends State<ProviderDashboard> {
                                                                 "Number of Patients:\n",
                                                             style: TextStyle(
                                                               fontSize:
-                                                                  width * 0.06,
+                                                                  width * 0.05,
                                                               color:
                                                                   Colors.black,
                                                               fontWeight:

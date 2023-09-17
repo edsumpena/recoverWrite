@@ -81,7 +81,7 @@ class _EntryState extends State<Entry> with SingleTickerProviderStateMixin {
                             flex: 3,
                             child: Container(
                                 decoration: BoxDecoration(
-                                  color: Colors.indigoAccent,
+                                  color: const Color(0xff4e1dc2),
                                   borderRadius: BorderRadius.vertical(
                                       top: Radius.circular(width * 0.035)),
                                 ),
@@ -129,17 +129,17 @@ class _EntryState extends State<Entry> with SingleTickerProviderStateMixin {
                                                 fontSize: 18,
                                                 fontWeight: FontWeight.bold,
                                                 overflow: TextOverflow.ellipsis,
-                                                color: Colors.grey),
+                                                color: Colors.black),
                                             maxLines: 1,
                                           ),
                                           SizedBox(height: height * 0.0075),
                                           Text(
-                                            "Completed Regiment: ${widget.entry == null ? "" : widget.entry!["completeRegiment"]![0]}",
+                                            "Completed Routine: ${widget.entry == null ? "" : widget.entry!["completeRegiment"]![0]}",
                                             style: const TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.bold,
                                                 overflow: TextOverflow.ellipsis,
-                                                color: Colors.grey),
+                                                color: Colors.black),
                                           ),
                                           SizedBox(height: height * 0.0075),
                                           Text(
@@ -148,16 +148,16 @@ class _EntryState extends State<Entry> with SingleTickerProviderStateMixin {
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.bold,
                                                 overflow: TextOverflow.ellipsis,
-                                                color: Colors.grey),
+                                                color: Colors.black),
                                           ),
                                           SizedBox(height: height * 0.0075),
                                           Text(
-                                            "Emotional State: ${widget.entry == null ? "" : _getEmotion()}",
+                                            "Symptoms: ${widget.entry == null ? "" : _getEmotion()}",
                                             style: const TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.bold,
                                                 overflow: TextOverflow.ellipsis,
-                                                color: Colors.grey),
+                                                color: Colors.black),
                                           ),
                                           SizedBox(height: height * 0.004),
                                         ])))),
@@ -176,7 +176,7 @@ class _EntryState extends State<Entry> with SingleTickerProviderStateMixin {
                             flex: 1,
                             child: Container(
                                 decoration: BoxDecoration(
-                                  color: Colors.indigoAccent,
+                                  color: const Color(0xff4e1dc2),
                                   borderRadius: BorderRadius.only(
                                       topLeft: Radius.circular(width * 0.035),
                                       topRight: Radius.circular(width * 0.035)),
@@ -244,7 +244,7 @@ class _EntryState extends State<Entry> with SingleTickerProviderStateMixin {
                                             ),
                                           ),
                                           SizedBox(height: height * 0.0075),
-                                          Text("Completed Regiment: ${widget.entry == null ? "" : widget.entry!["completeRegiment"]![0]}",
+                                          Text("Completed Routine: ${widget.entry == null ? "" : widget.entry!["completeRegiment"]![0]}",
                                                 style: const TextStyle(
                                                     fontSize: 14),
                                               maxLines: 1,
@@ -254,7 +254,7 @@ class _EntryState extends State<Entry> with SingleTickerProviderStateMixin {
                                                 fontSize: 14),
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,),
-                                          Text("Emotional State: ${widget.entry == null ? "" : _getEmotion()}",
+                                          Text("Symptoms: ${widget.entry == null ? "" : _getEmotion()}",
                                             style: const TextStyle(
                                                 fontSize: 14),
                                             maxLines: 1,
@@ -357,7 +357,7 @@ class _EntryState extends State<Entry> with SingleTickerProviderStateMixin {
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold,
                                             overflow: TextOverflow.ellipsis,
-                                            color: Colors.grey),
+                                            color: Colors.black),
                                         maxLines: 1,
                                       ),
                                     ),
@@ -367,7 +367,6 @@ class _EntryState extends State<Entry> with SingleTickerProviderStateMixin {
                                         content,
                                         style: const TextStyle(
                                             fontSize: 14,
-                                            fontWeight: FontWeight.bold,
                                             overflow: TextOverflow.ellipsis,
                                             color: Colors.grey),
                                         maxLines: 5,

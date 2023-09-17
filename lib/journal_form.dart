@@ -21,30 +21,29 @@ class AddEntryBloc extends FormBloc<String, String> {
   final ValueSetter<String> addEntryCallback;
 
   final completeRegiment = SelectFieldBloc(
-      name: 'Completed the regiment?',
+      name: 'Did you complete your routine?',
       items: ['Yes', 'No'],
       validators: [FieldBlocValidators.required]);
 
   final timeSpent = SelectFieldBloc(
-      name: 'Time spent today on regiment',
-      items: ['1-2 hours', '3-4 hours', '5-6 hours', '7-8 hours', '8+ hours'],
+      name: 'Time spent today on routine:',
+      items: ['<1 hour', '1-2 hours', '2-3 hours', '3-4 hours', '>4 hours'],
       validators: [FieldBlocValidators.required]);
 
   final emotion = MultiSelectFieldBloc(
-      name: 'Which emotion(s) describe your feelings?',
-      items: ['Happy', 'Sad', 'Optimistic', 'Angry', 'Frustrated'],
-      validators: [FieldBlocValidators.required]);
+      name: 'Did you experience any of these symptoms?',
+      items: ['Weakness', 'Numbness', 'Fatigue', 'Memory Problems', 'Mood Swings'],);
 
   final completeDescription = TextFieldBloc(
-      name: 'Describe completed exercises.', validators: []);
+      name: 'Describe completed exercises', validators: []);
 
   final noCompleteDescription = TextFieldBloc(
-      name: 'Describe uncompleted exercises.',
+      name: 'Describe incomplete exercises',
       validators: []);
 
   final journal = TextFieldBloc(
       name:
-          'Feelings about regiment? Challenges?',
+          'How did you feel about your routine?',
       validators: []);
 
   AddEntryBloc({required this.addEntryCallback}) {
@@ -121,7 +120,7 @@ class AddEntryMain extends State<AddEntry> {
 
     return Theme(
       data: Theme.of(context).copyWith(
-        primaryColor: Colors.indigo,
+        primaryColor: const Color(0xff4e1dc2),
         inputDecorationTheme: InputDecorationTheme(
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
@@ -147,8 +146,8 @@ class AddEntryMain extends State<AddEntry> {
                       backgroundColor: Colors.white,
                         leading: IconButton(
                           icon: Platform.isAndroid
-                              ? const Icon(Icons.arrow_back, color: Colors.indigo)
-                              : const Icon(Icons.arrow_back_ios, color: Colors.indigo),
+                              ? const Icon(Icons.arrow_back, color: Color(0xff4e1dc2))
+                              : const Icon(Icons.arrow_back_ios, color: Color(0xff4e1dc2)),
                           onPressed:  () => Navigator.of(context).pop(),
                         )
                   ),
@@ -177,9 +176,9 @@ class AddEntryMain extends State<AddEntry> {
                                   maxHeight: height * 0.08,
                                 ),
                                 child: Text(
-                                  'Add Entry',
+                                  'Add a Log',
                                   style: TextStyle(
-                                      color: Colors.indigo,
+                                      color: const Color(0xff4e1dc2),
                                       fontWeight: FontWeight.w900,
                                       fontSize: width * 0.1),
                                   maxLines: 1,
@@ -264,7 +263,7 @@ class AddEntryMain extends State<AddEntry> {
                               ),
                               CheckboxListTile(
                                 title: const Text(
-                                  "Share with Provider?",
+                                  "Share with healthcare provider?",
                                 ),
                                 value: sendProvider,
                                 onChanged: (bool? value) {
@@ -273,7 +272,7 @@ class AddEntryMain extends State<AddEntry> {
                                   });
                                 },
                                   controlAffinity: ListTileControlAffinity.platform,
-                                activeColor: Colors.indigo,
+                                activeColor: const Color(0xff4e1dc2),
                               ), //Check
                               SizedBox(
                                 height: height * 0.01,
@@ -289,10 +288,10 @@ class AddEntryMain extends State<AddEntry> {
                                     child: ElevatedButton(
                                       onPressed: addEntryBloc.submit,
                                       style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.indigo,
+                                        backgroundColor: const Color(0xff4e1dc2),
                                       ),
                                       child: const Text(
-                                        'Submit',
+                                        'Submit your Log',
                                         style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 18,

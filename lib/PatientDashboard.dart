@@ -136,7 +136,7 @@ class _PatientDashboardState extends State<PatientDashboard>{
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
-                                      fontSize: width * 0.10,
+                                      fontSize: width * 0.07,
                                     )),
                               ),
                     Padding(
@@ -174,9 +174,9 @@ class _PatientDashboardState extends State<PatientDashboard>{
                                               text: TextSpan(children: [
                                                 TextSpan(
                                                     text:
-                                                    "Days on Regiment:\n",
+                                                    "Days on Routine:\n",
                                                     style: TextStyle(
-                                                      fontSize: width * 0.06,
+                                                      fontSize: width * 0.05,
                                                       color: Colors.black,
                                                       fontWeight: FontWeight.w600,
                                                     )),
